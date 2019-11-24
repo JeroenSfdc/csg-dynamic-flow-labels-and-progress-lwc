@@ -4,7 +4,7 @@
         <lightning-layout>
             <lightning-layout-item size="9" padding="around-small">
                 <template if:true={_showStages}>
-                    <lightning-progress-indicator current-step={_currentStage} type="base" variant="base">
+                    <lightning-progress-indicator current-step={currentStage} type="base" variant="base">
                         <template for:each={stages} for:item="stage">
                             <lightning-progress-step key={stage} label={stage} value={stage}></lightning-progress-step>
                         </template>
