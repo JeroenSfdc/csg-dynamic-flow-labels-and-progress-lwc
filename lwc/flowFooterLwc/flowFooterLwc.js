@@ -7,7 +7,7 @@
 */
 
 import { LightningElement, track, api, wire } from 'lwc';
-import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationBackEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
+import { FlowNavigationNextEvent, FlowNavigationBackEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 
 export default class FlowFooterLwc extends LightningElement {
 
@@ -15,7 +15,7 @@ export default class FlowFooterLwc extends LightningElement {
     @api showPrevious = false;          // Input: should Previous button be shown
     @api labelNext = 'Next';            // Input: label for the 'Next' button defaults 'Next'
     @api labelPrevious = 'Previous';    // Input: label for the 'Previous' button defaults to 'Previous'
-    @api variantPrevious = 'neutral';      // Input: Variant for the 'Previous' button defaults to 'base'
+    @api variantPrevious = 'neutral';   // Input: Variant for the 'Previous' button defaults to 'base'
     @api variantNext = 'brand';         // Input: Variant for the 'Next' button defaults to 'base'
     @api stages = [];                   // Input: List of stages received from Flow
     @api currentStage = '';             // Input: Current stage
@@ -23,10 +23,6 @@ export default class FlowFooterLwc extends LightningElement {
 
     get _showStages() {
         return (this.stages.length > 0 && this.currentStage.length > 0);
-    }
-
-    get _currentStage() {
-        return this.currentStage.indexOf(':') ? this.currentStage.split(':')[1] : '';
     }
 
     get _isNextDisabled() {
@@ -37,6 +33,7 @@ export default class FlowFooterLwc extends LightningElement {
         return !this._canBack();
     }
 
+    /* Either NEXT or FINISH are valid */
     _canNext() {
         return this.availableActions.find(action => action === 'NEXT') || this.availableActions.find(action => action === 'FINISH');
     }
@@ -45,25 +42,16 @@ export default class FlowFooterLwc extends LightningElement {
         return this.availableActions.find(action => action === 'BACK');
     }
 
-    connectedCallback () {
-        console.log('stages = ' + this.stages);
-        console.log('currentStage = ' + this.currentStage);
-        console.log('currentStage = ' + this._currentStage);
-    }
-
     handleNext() {
         if (this.availableActions.find(action => action === 'NEXT')) {
-            const navigateEvent = new FlowNavigationNextEvent();
-            this.dispatchEvent(navigateEvent);
+            this.dispatchEvent(new FlowNavigationNextEvent());
         }
         else {
-            const navigateEvent = new FlowNavigationFinishEvent();
-            this.dispatchEvent(navigateEvent);
+            this.dispatchEvent(new FlowNavigationFinishEvent());
         }
     }
 
     handleBack() {
-        const navigateEvent = new FlowNavigationBackEvent();
-        this.dispatchEvent(navigateEvent);
+        this.dispatchEvent(new FlowNavigationBackEvent());
     }
 }
