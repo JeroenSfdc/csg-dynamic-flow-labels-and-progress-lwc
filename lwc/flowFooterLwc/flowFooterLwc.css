@@ -1,0 +1,9 @@
+/* this will ensure the footer is not pushed down to the bottom of the page */
+.lwc-flow-footer {
+    bottom: auto;
+    width: 100%;
+    display: block;
+}
+.right-align {
+    text-align: right;
+}
