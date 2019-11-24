@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-docked-form-footer lwc-flow-footer">
+
+        <lightning-layout>
+            <lightning-layout-item size="9" padding="around-small">
+                <template if:true={_showStages}>
+                    <lightning-progress-indicator current-step={_currentStage} type="base" variant="base">
+                        <template for:each={stages} for:item="stage">
+                            <lightning-progress-step key={stage} label={stage} value={stage}></lightning-progress-step>
+                        </template>
+                    </lightning-progress-indicator>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small" class="right-align">
+                <template:if true={showPrevious}>
+                    <lightning-button variant={variantPrevious} label={labelPrevious} onclick={handleBack} disabled={_isBackDisabled} class="slds-m-left_x-small"></lightning-button>
+                </template:if>
+                <template:if true={showNext}>
+                    <lightning-button variant={variantNext} label={labelNext} onclick={handleNext} disabled={_isNextDisabled} class="slds-m-left_x-small"></lightning-button>
+                </template:if>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>
