@@ -1,12 +1,11 @@
 /*
- Inputs: .
- Outputs: .
+ Inputs: See descriptions for @api properties
+ Outputs: None
  History:
     24/11/2019     SF/JEBU Created
-                https://imcdgroup.atlassian.net/browse/SFDP-4751
+                   https://imcdgroup.atlassian.net/browse/SFDP-5187
 */
-
-import { LightningElement, track, api, wire } from 'lwc';
+import { LightningElement, api} from 'lwc';
 import { FlowNavigationNextEvent, FlowNavigationBackEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 
 export default class FlowFooterLwc extends LightningElement {
@@ -20,6 +19,7 @@ export default class FlowFooterLwc extends LightningElement {
     @api stages = [];                   // Input: List of stages received from Flow
     @api currentStage = '';             // Input: Current stage
     @api availableActions = [];         // Related with FlowNavigation events
+    @api flowType = 'flowAction';       // Input: either 'flowAction' or 'flexiPage'
 
     get _showStages() {
         return (this.stages.length > 0 && this.currentStage.length > 0);
@@ -33,7 +33,10 @@ export default class FlowFooterLwc extends LightningElement {
         return !this._canBack();
     }
 
-    /* Either NEXT or FINISH are valid */
+    get _footerClass() {
+        return this.flowType === 'flowAction' ? 'modal-footer slds-modal__footer lwc-flow-footer' : 'slds-card__footer';
+    }
+
     _canNext() {
         return this.availableActions.find(action => action === 'NEXT') || this.availableActions.find(action => action === 'FINISH');
     }
