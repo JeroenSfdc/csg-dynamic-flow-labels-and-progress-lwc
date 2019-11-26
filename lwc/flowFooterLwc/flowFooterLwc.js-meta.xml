@@ -9,6 +9,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <property name="flowType" type="String" description="Input: Flow exposes as Flow Action (flowAction) or inside Record page (flexiPage)?" default="flowAction" datasource="flowAction,flexiPage"/>
             <property name="showNext" type="Boolean" description="Input: Show Next button?" default="false"/>
             <property name="showPrevious" type="Boolean" description="Input: Show Previous button?" default="false"/>
             <property name="labelNext" type="String" description="Input: Label for Next button." default="Next"/>
